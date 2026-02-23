@@ -1,0 +1,602 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Mandate Load",
+        "formDescription": "Where Global Intelligence Meets Fund Mandate.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Legal Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Strategy Type",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Buyout"
+                  },
+                  {
+                    "option": "Growth"
+                  },
+                  {
+                    "option": "Secondary"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Vintage Year",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Primary Analyst",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Processing Date",
+              "fieldType": "date"
+            },
+            {
+              "fieldLabel": "Target Count",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Upload Fund Mandate PDF",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".pdf",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Fund Extraction Instruction",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "customCss": ":root {\n\t--font-family: 'Open Sans', sans-serif;\n\t--font-weight-normal: 400;\n\t--font-weight-bold: 600;\n\t--font-size-body: 12px;\n\t--font-size-label: 14px;\n\t--font-size-test-notice: 12px;\n\t--font-size-input: 14px;\n\t--font-size-header: 20px;\n\t--font-size-paragraph: 14px;\n\t--font-size-link: 12px;\n\t--font-size-error: 12px;\n\t--font-size-html-h1: 28px;\n\t--font-size-html-h2: 20px;\n\t--font-size-html-h3: 16px;\n\t--font-size-html-h4: 14px;\n\t--font-size-html-h5: 12px;\n\t--font-size-html-h6: 10px;\n\t--font-size-subheader: 14px;\n\n\t/* Colors */\n\t--color-background: #fbfcfe;\n\t--color-test-notice-text: #e6a23d;\n\t--color-test-notice-bg: #fefaf6;\n\t--color-test-notice-border: #f6dcb7;\n\t--color-card-bg: #ffffff;\n\t--color-card-border: #dbdfe7;\n\t--color-card-shadow: rgba(99, 77, 255, 0.06);\n\t--color-link: #7e8186;\n\t--color-header: #525356;\n\t--color-label: #555555;\n\t--color-input-border: #dbdfe7;\n\t--color-input-text: #71747A;\n\t--color-focus-border: rgb(90, 76, 194);\n\t--color-submit-btn-bg: #ff6d5a;\n\t--color-submit-btn-text: #ffffff;\n\t--color-error: #ea1f30;\n\t--color-required: #ff6d5a;\n\t--color-clear-button-bg: #7e8186;\n\t--color-html-text: #555;\n\t--color-html-link: #ff6d5a;\n\t--color-header-subtext: #7e8186;\n\n\t/* Border Radii */\n\t--border-radius-card: 8px;\n\t--border-radius-input: 6px;\n\t--border-radius-clear-btn: 50%;\n\t--card-border-radius: 8px;\n\n\t/* Spacing */\n\t--padding-container-top: 24px;\n\t--padding-card: 24px;\n\t--padding-test-notice-vertical: 12px;\n\t--padding-test-notice-horizontal: 24px;\n\t--margin-bottom-card: 16px;\n\t--padding-form-input: 12px;\n\t--card-padding: 24px;\n\t--card-margin-bottom: 16px;\n\n\t/* Dimensions */\n\t--container-width: 448px;\n\t--submit-btn-height: 48px;\n\t--checkbox-size: 18px;\n\n\t/* Others */\n\t--box-shadow-card: 0px 4px 16px 0px var(--color-card-shadow);\n\t--opacity-placeholder: 0.5;\n}"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -1408,
+        48
+      ],
+      "id": "b7d2969f-0c42-4a3d-a52c-afa3beef9407",
+      "name": "n8n Form Trigger",
+      "webhookId": "d9016fd3-fcc1-4903-9e34-62ac2d5a08cf",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://10.4.16.44:8000/api/parse-mandate-upload",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $json[\"Fund Extraction Instruction\"] }}"
+            },
+            {
+              "name": "legal_name",
+              "value": "={{ $json[\"Legal Name\"] }}"
+            },
+            {
+              "name": "strategy_type",
+              "value": "={{ $json[\"Strategy Type\"] }}"
+            },
+            {
+              "name": "vintage_year",
+              "value": "={{ $json[\"Vintage Year\"] }}"
+            },
+            {
+              "name": "primary_analyst",
+              "value": "={{ $json[\"Primary Analyst\"] }}"
+            },
+            {
+              "name": "=processing_date",
+              "value": "={{ $json[\"Processing Date\"] }}"
+            },
+            {
+              "name": "target_count",
+              "value": "={{ $json[\"Target Count\"] }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ $json[\"Fund Extraction Instruction\"] }}"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "=Upload_Fund_Mandate_PDF"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1184,
+        48
+      ],
+      "id": "b79ad4d8-eebb-4e6f-b7b1-ecba4b143c61",
+      "name": "Upload-Mandate-Endpoint"
+    },
+    {
+      "parameters": {
+        "url": "http://10.4.16.25:8500/api/capabilities/1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -736,
+        144
+      ],
+      "id": "3e96beff-6895-49a5-a366-cbe27e0bfd50",
+      "name": "Capablity-Compass Endpoint"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://10.4.16.44:8000/api/parse-mandate/no-stream",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "pdf_name",
+              "value": "={{ $json.pdf_name }}"
+            },
+            {
+              "name": "query",
+              "value": "={{ $json.query }}"
+            },
+            {
+              "name": "capability_params",
+              "value": "={{ JSON.stringify($json.capability_params) }}"
+            },
+            {
+              "name": "mandate_id",
+              "value": "={{ $json.mandate_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -288,
+        48
+      ],
+      "id": "385f96dd-5c0d-489b-b3d6-82de1e086173",
+      "name": "Extract Mandate Parameters Endpoint"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a0352edb-51a8-48d6-8ca8-4712ff27b704",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -960,
+        48
+      ],
+      "id": "2ae8af71-e98a-4ee7-a950-065f2d253379",
+      "name": "redirecting to mock values if capablity compass is unavailable"
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * n8n Function Node\n * Hardcoded fallback return for mandate parsing.\n * This bypasses the Capability Compass endpoint completely.\n */\n\nreturn [\n  {\n    json: {\n      pdf_name:$input.first().json.filename,\n      query: \"Generate mandate criteria\",\n      mandate_id:$input.first().json.mandate_id ,   // 🔥 <-- update this dynamically if needed\n\n      capability_params: {\n        \"1\": {\n          subprocess_id: 1,\n          subprocess_name: \"Sector & Industry Research\",\n          category: \"Back Office\",\n          data_elements: [\n            \"country\",\n            \"sector\",\n            \"industry\"\n          ]\n        },\n\n        \"2\": {\n          subprocess_id: 2,\n          subprocess_name: \"Bottom-Up Fundamental Analysis\",\n          category: \"Back Office\",\n          data_elements: [\n            \"revenue\",\n            \"ebitda\",\n            \"growth\",\n            \"gross_profit_margin\",\n            \"net_income\",\n            \"return_on_equity\",\n            \"debt_to_equity\",\n            \"pe_ratio\",\n            \"price_to_book\",\n            \"market_cap\",\n            \"dividend_yield\"\n          ]\n        },\n\n        \"3\": {\n          subprocess_id: 3,\n          subprocess_name: \"Risk Assessment of Investment Ideas\",\n          category: \"Back Office\",\n          data_elements: [\n            \"competitive_position\",\n            \"governance_quality\",\n            \"customer_concentration_risk\",\n            \"vendor_platform_dependency\",\n            \"regulatory_legal_risk\",\n            \"business_model_complexity\"\n          ]\n        }\n      }\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -512,
+        -48
+      ],
+      "id": "15dba2cd-f7f9-4c96-8348-f49326743fb1",
+      "name": "setting up the mock values"
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * n8n Function node: Combine Upload + Capability into final payload.\n * - Uses $items(\"Node Name\", runIndex, outputIndex) to fetch other nodes' output.\n * - Robust to array/object shapes from HTTP nodes.\n * - Appends \" - Copy\" before .pdf (set APPEND_COPY to false if not needed).\n */\n\nconst NODE_UPLOAD = \"Upload-Mandate-Endpoint\";       // <-- set to your exact node name\nconst NODE_CAP    = \"Capablity-Compass Endpoint\";    // <-- set to your exact node name (typo if that’s how it’s named)\n\nconst APPEND_COPY = false; // set false if you don't want \" - Copy\" in pdf_name\n\n// -------- helpers --------\nfunction firstObject(json) {\n  if (Array.isArray(json)) return json[0] ?? {};\n  return json ?? {};\n}\nfunction appendCopyBeforePdf(filename, doAppend = true) {\n  if (!doAppend) return filename || \"\";\n  if (typeof filename !== \"string\" || !filename.length) return filename || \"\";\n  return filename.replace(/\\.pdf$/i, \" - Copy.pdf\");\n}\nfunction decodeHtmlEntities(str) {\n  if (typeof str !== \"string\") return str;\n  return str.replace(/&amp;/g, \"&\");\n}\n\n// -------- fetch upstream outputs (last run, first output) --------\nconst uploadItems = $items(NODE_UPLOAD, 0, 0);\nconst capItems    = $items(NODE_CAP, 0, 0);\n\nif (!uploadItems?.length) {\n  throw new Error(`Referenced node doesn't exist or produced no items: ${NODE_UPLOAD}`);\n}\nif (!capItems?.length) {\n  throw new Error(`Referenced node doesn't exist or produced no items: ${NODE_CAP}`);\n}\n\n// Normalize to single objects\nconst upload = firstObject(uploadItems[0].json);\nconst cap    = firstObject(capItems[0].json);\n\n// -------- extract upload fields --------\nconst pdf_name_raw = upload.filename || \"\";         // e.g., \"FUND MANDATE - US GROWTH EQUITY FUND (1).pdf\"\nconst pdf_name     = appendCopyBeforePdf(pdf_name_raw, APPEND_COPY);\nconst query        = \"Generate mandate criteria\";    // or: upload.query || \"Generate mandate criteria\"\nconst mandate_id   = upload.mandate_id;\n\n// -------- build capability_params (object keyed by string sp.id) --------\nconst capability_params = {};\nconst processes = Array.isArray(cap.processes) ? cap.processes : [];\n\nfor (const proc of processes) {\n  const subprocesses = Array.isArray(proc.subprocesses) ? proc.subprocesses : [];\n  for (const sp of subprocesses) {\n    const data_entities = Array.isArray(sp.data_entities) ? sp.data_entities : [];\n    const elements = [];\n\n    for (const de of data_entities) {\n      const els = Array.isArray(de.data_elements) ? de.data_elements : [];\n      for (const el of els) {\n        const name = el?.data_element_name;\n        if (typeof name === \"string\" && name.length) elements.push(name);\n      }\n    }\n\n    const key = String(sp.id);\n    capability_params[key] = {\n      subprocess_id: sp.id,\n      subprocess_name: decodeHtmlEntities(sp.name || \"\"),\n      category: sp.category || \"\",\n      data_elements: Array.from(new Set(elements)),\n    };\n  }\n}\n\n// -------- final output --------\nreturn [\n  {\n    json: {\n      pdf_name,\n      query,\n      mandate_id,\n      capability_params,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -512,
+        144
+      ],
+      "id": "8dc026f4-c808-42cb-81be-a599dd894df3",
+      "name": "applying filters"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "==You are the Orchestrator Agent for a fund mandate workflow. You have access to three Tools (Sourcing, Screening, Risk_Analysis). Your job is to decide, at runtime, which Tool to call and with what payloads based on the current item’s data and the user’s objective. There is NO fixed flow—choose dynamically at runtime.\n\nGOAL\nUse the tools to progress the mandate using the data extracted from the mandate file to (a) optionally screen them financially,(b) source candidate companies, and (c) optionally run risk analysis—only when the inputs are ready. Stop when no further steps are useful.\n\nDATA CONTEXT (from current item)\n- mandate_id: {{ $('setting up the mock values').item.json.mandate_id }}\n- Sector & Industry Research (SIR) object:\n  {{ JSON.stringify($json.criteria.mandate['Sector & Industry Research']) }}\n- Bottom-Up Fundamental Analysis (BUFA) object:\n  {{ JSON.stringify($json.criteria.mandate['Bottom-Up Fundamental Analysis']) }}\n- Risk Assessment (descriptive; not directly used as a tool payload):\n  {{ JSON.stringify($json.criteria.mandate['Risk Assessment of Investment Ideas']) }}\n\nIMPORTANT PRINCIPLES\n- No fixed sequence. Decide dynamically using available data and intermediate results.\n- Validate inputs before calling any tool; if required data is missing, either derive it from prior results or return a short {\"status\":\"needs_input\",...} summary and stop.\n- Send JSON objects as objects (do NOT stringify). Arrays must be real arrays (e.g., [101,203]), not CSV strings.\n\nTOOL INVOCATION CONTRACTS (how to set $fromAI parameters)\n\n1) TOOL: Sourcing\n   Purpose: fetch candidate companies matching {country, sector, industry}.\n   Provide $fromAI parameters:\n     - parameters0_Value = mandate_id (number)\n     - parameters1_Value = additionalProp1 (object), shape:\n         { \"country\": \"<string>\", \"sector\": \"<string>\", \"industry\": \"<string>\" }\n   Typical values:\n     - parameters0_Value = {{ $('setting up the mock values').item.json.mandate_id }}\n     - parameters1_Value = {{ JSON.stringify($json.criteria.mandate['Sector & Industry Research']) }}\n   Return to me a compact JSON summary:\n   {\n     \"status\": \"sucess\",\n     \"result\": [<int>,<int>,.....],\n     \"filtered_company_count\":<int>\n   }\n\n2) TOOL: Screening\n   Purpose: apply BUFA filters for the mandate.\n   NOTE: In this workflow version, Screening tool accepts ONLY:\n     - mandate_id\n     - mandate_parameters (BUFA object)\n     - company_id: list of all the company ids shortlisted in sourcing\n   Provide $fromAI parameters:\n     - parameters0_Value = mandate_id (number)\n     - parameters1_Value = mandate_parameters (object), e.g.:\n         {\n           \"revenue\": \"> $40M USD\",\n           \"ebitda\": \">12%\",\n           \"growth\": \">35%\",\n           \"gross_profit_margin\": \">60%\",\n           \"net_income\": \"Positive\",\n           \"return_on_equity\": \">15%\",\n           \"debt_to_equity\": \"<0.5\",\n           \"pe_ratio\": \"<40\",\n           \"price_to_book\": \"<15\",\n           \"market_cap\": \">$500M USD\",\n           \"dividend_yield\": \"\"\n         }\n     - parameters2_Value = company_id (array),e.g.:\n        [1,2,3,...]\n   Typical values:\n     - parameters0_Value = {{ $('setting up the mock values').item.json.mandate_id }}\n     - parameters1_Value = {{ JSON.stringify($json.criteria.mandate['Bottom-Up Fundamental Analysis']) }}\n     - parameters2_Value = Array of all the company ids shortlisted in sourcing \n\n   Return to me a compact JSON summary:\n   {\n      \"mandate_id\":<int>\n       \"company_id\": [<int>, ...]\n    } these are the company that got shortlisted after applying Screening Parameters\n\n3) TOOL: Risk_Analysis\n   Purpose: run risk analysis for a set of company IDs.\n   Provide $fromAI parameters:\n     - parameters1_Value = company_id (array<int>)  // the tool already injects mandate_id from context\n   Typical values:\n     - parameters1_Value = [<int>, <int>, ...]      // from sourcing/screening outputs or known context\n   Return to me a compact JSON summary:\n   {\n     \"stage\": \"risk\",\n     \"status\": \"ok\" | \"empty\" | \"error\" | \"needs_input\",\n     \"input\": {\n       \"mandate_id\": {{ $('setting up the mock values').item.json.mandate_id }},\n       \"company_id_in\": [<int>, ...]\n     },\n     \"result\": {\n       \"assessed_ids\": [<int>, ...],\n       \"flagged_ids\": [<int>, ...],\n       \"summary\": \"<short text>\"\n     }\n   }\n\n4) TOOL: Report-Generation\n   Purpose: Generate report for the sourced, screened and risk analysed companies\n   Provide $fromAI parameters:\n     - parameters0_Value = mandate_id (number)\n   Typical values:\n     - parameters0_Value = {{ $('setting up the mock values').item.json.mandate_id }}\n   Return to me a compact JSON summary:\n   {\n     \"stage\": \"Report-Generation\",\n     \"status\": \"ok\" | \"empty\" | \"error\" | \"needs_input\",\n     \"input\": {\n       \"mandate_id\":<int>\n     },\n   }\n\nTRACEABILITY\n- After each tool call, always return the compact JSON summary described above and then decide the next step. Stop when no further steps are needed.",
+        "needsFallback": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        256,
+        48
+      ],
+      "id": "3526f5b5-3049-464f-a96a-a9d3e8c5d593",
+      "name": "Orchestrator"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "20",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        192,
+        272
+      ],
+      "id": "19652d39-c304-4876-b941-e79dd5fee827",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://10.4.16.44:8000/api/screen-companies",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "mandate_id",
+              "value": "={{ $fromAI('parameters0_Value', `0`, 'json') }}"
+            },
+            {
+              "name": "mandate_parameters",
+              "value": "={{ $fromAI('parameters1_Value', `string object `, 'json') }}"
+            },
+            {
+              "name": "company_id",
+              "value": "={{ $fromAI('parameters2_Value', `array of company ids of type int`, 'json') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        320,
+        272
+      ],
+      "id": "0cef7825-50f7-4d7d-be71-bdf67cf73c3f",
+      "name": "Screening"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://10.4.16.44:8000/risk/analyze-http",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "mandate_id",
+              "value": "={{ $('setting up the mock values').item.json.mandate_id }}"
+            },
+            {
+              "name": "company_id",
+              "value": "={{ $fromAI('parameters1_Value', ``, 'json') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        448,
+        272
+      ],
+      "id": "1d20165f-c68b-4724-a2fc-e4102c0f5fb8",
+      "name": "Risk_Analysis"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://10.4.16.44:8000/api/filter-companies/no-stream",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "mandate_id",
+              "value": "={{ $fromAI('parameters0_Value', `0`, 'json') }}"
+            },
+            {
+              "name": "additionalProp1",
+              "value": "={{ $fromAI('parameters1_Value', ``, 'json') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        576,
+        272
+      ],
+      "id": "7c93064b-2691-4775-a720-1ccf5a95a4e0",
+      "name": "Sourcing"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        272
+      ],
+      "id": "62a6e301-d268-498a-881e-3a010cb68ff3",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "OZ115izITKP6H06C",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://10.4.16.44:8000/report/generate-http",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "mandate_id",
+              "value": "={{ $fromAI('parameters0_Value', `0`, 'json') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        704,
+        272
+      ],
+      "id": "2d2090e1-34b7-4f58-a9cc-77dd737966a6",
+      "name": "Report-Generation"
+    },
+    {
+      "parameters": {
+        "model": "gpt-5",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+      "typeVersion": 1,
+      "position": [
+        64,
+        272
+      ],
+      "id": "c7bf0825-fbac-4553-97b5-d93aea7ab6b3",
+      "name": "Azure OpenAI Chat Model",
+      "credentials": {
+        "azureOpenAiApi": {
+          "id": "GqiQ3Qhua3rzyD6F",
+          "name": "Azure Open AI account 3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "n8n Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "Upload-Mandate-Endpoint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload-Mandate-Endpoint": {
+      "main": [
+        [
+          {
+            "node": "redirecting to mock values if capablity compass is unavailable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Capablity-Compass Endpoint": {
+      "main": [
+        [
+          {
+            "node": "applying filters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Mandate Parameters Endpoint": {
+      "main": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "redirecting to mock values if capablity compass is unavailable": {
+      "main": [
+        [
+          {
+            "node": "setting up the mock values",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Capablity-Compass Endpoint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "setting up the mock values": {
+      "main": [
+        [
+          {
+            "node": "Extract Mandate Parameters Endpoint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "applying filters": {
+      "main": [
+        [
+          {
+            "node": "Extract Mandate Parameters Endpoint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Screening": {
+      "ai_tool": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Risk_Analysis": {
+      "ai_tool": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sourcing": {
+      "ai_tool": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Report-Generation": {
+      "ai_tool": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Azure OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Orchestrator",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1d9eaf06-de00-47b7-bd2b-3863c2641069",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "cf09b939952cc1b89180260434b161aba2640dbbac618e710f5368eb47ad8f4e"
+  },
+  "id": "PqzAHMUlAVQpGLG2",
+  "tags": []
+}
